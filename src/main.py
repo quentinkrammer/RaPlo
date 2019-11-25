@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-'''
 
-'''
 import socket
 import os
 from GetDataFromFile import GetDataFromFile
 from SDSFileHandler import SDSFileHandler
 from DeparseData import DeparseData
-import matplotlib.pyplot as plt
-import numpy as np
+from RTS_Plot import RTS_Plot
+
 
 # def writeToFile(txt):
 #     f = open(".\data\testdatenX.txt", "a")
@@ -67,12 +65,20 @@ import numpy as np
 # print("ENDE")
 
 
-parser = DeparseData("testdaten1.txt")
-jdl, hd = parser.deparseNextSegment()
-jdl, hd = parser.deparseNextSegment()
-jdl, hd = parser.deparseNextSegment()
-jdl, hd = parser.deparseNextSegment()
-print("ENDE")
+# parser = DeparseData("testdaten1.txt")
+# jdl, hd = parser.deparseNextSegment()
+# jdl, hd = parser.deparseNextSegment()
+# jdl, hd = parser.deparseNextSegment()
+# jdl, hd = parser.deparseNextSegment()
+# print("ENDE")
+
+
+rts = RTS_Plot()
+rts.scatterPlot()
+rts.linePlot()
+
+
+
 
 
 
