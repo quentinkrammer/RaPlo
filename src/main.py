@@ -2,8 +2,6 @@
 
 import socket
 import os
-from GetDataFromFile import GetDataFromFile
-from SDSFileHandler import SDSFileHandler
 from DeparseData import DeparseData
 from RTS_Plot import RTS_Plot
 
@@ -27,55 +25,37 @@ from RTS_Plot import RTS_Plot
 #             writeToFile(data.decode())
 #path = os.path.realpath('..')# + "\\data\\testdaten1.txt"
 
-
-# path = r"C:\\Users\\Divalu\\git\\RaPlo\\data\\testdaten1.txt"
-# print(path)
-
-# d = GetDataFromFile("test2.txt")
-# data = d.getData()
-# #print(data)
-# 
-# 
-# x = []
-# y = []
-# 
-# for bracket in data:
-#     for dataPoint in bracket["Joint Detection"]:
-#         x.append( dataPoint["_LatPos_m"] )
-#         y.append( dataPoint["_LongPos_m"] )
-#     
-# 
-# plt.plot(x, y, marker="x")
-# 
-# plt.xlabel('_LatPos_m')
-# plt.ylabel('_LongPos_m')
-# 
-# plt.title("Simple Plot")
-# 
-# plt.legend()
-# 
-# plt.show()
+parser = DeparseData("local")
+jdl, hd = parser.deparseNextSegment()
+print(jdl)
+print(len(jdl["Version"]))
 
 
-# fh = SDSFileHandler("testdaten1.txt")
-# segment  = fh.getNextDGLSegment()
-# segment2  = fh.getNextDGLSegment()
-# segment3  = fh.getNextDGLSegment()
-# segment4  = fh.getNextDGLSegment()
-# print("ENDE")
+jdl, hd = parser.deparseNextSegment()
+print(jdl)
+jdl, hd = parser.deparseNextSegment()
+print(jdl)
+jdl, hd = parser.deparseNextSegment()
+print(jdl)
 
 
-# parser = DeparseData("testdaten1.txt")
-# jdl, hd = parser.deparseNextSegment()
-# jdl, hd = parser.deparseNextSegment()
-# jdl, hd = parser.deparseNextSegment()
-# jdl, hd = parser.deparseNextSegment()
-# print("ENDE")
+# print(jdl)
+# print("----------------ENDE----------------")
+# jdl = parser.deparseNextSegment()
+# print(jdl)
+# 
+# print("----------------ENDE----------------")
+# jdl = parser.deparseNextSegment()
+# print(jdl)
+# 
+# print("----------------ende----------------")
+# jdl = parser.deparseNextSegment()
+# print(jdl)
 
 
-rts = RTS_Plot()
-rts.scatterPlot()
-rts.linePlot()
+# rts = RTS_Plot()
+# rts.scatterPlot()
+# rts.linePlot()
 
 
 

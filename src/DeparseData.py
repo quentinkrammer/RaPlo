@@ -1,15 +1,17 @@
-from SDSFileHandler import SDSFileHandler
+from DGMSegmentHandler import DGMSegmentHandler
 
 
-class DeparseData(SDSFileHandler):
+class DeparseData(DGMSegmentHandler):
 
-    def __init__(self, path):        
-        SDSFileHandler.__init__(self, path)
+    def __init__(self, source):        
+        DGMSegmentHandler.__init__(self, source)
         self.JDL = {}        
         self.HD = {}         
         
     def deparseNextSegment(self):
-        JDLStrings, HDStrings = self.getNextDGLSegment()
+        #JDLStrings = self.getNextDGMSegment()
+        
+        JDLStrings, HDStrings = self.getNextDGMSegment()
         if not JDLStrings:
             return (False, False)    
 #         self.JDL = self.seperateHeaderFromData(JDLStrings, "JDL")
@@ -21,16 +23,21 @@ class DeparseData(SDSFileHandler):
             data = dataString[:-1].split(",")            
             for i, string in enumerate(headerStrings):
                 self.JDL[string].append(data[i])  
-                
+                 
         headerStrings = HDStrings[0][:-1].split(",")
         for string in headerStrings:
             self.HD[string] = []
         for dataString in HDStrings[1:]:
             data = dataString[:-1].split(",")            
             for i, string in enumerate(headerStrings):
-                self.HD[string].append(data[i])   
+                self.HD[string].append(data[i])
+        #return JDLStrings 
                                   
-        return (self.JDL, self.HD)        
+        return (self.JDL, self.HD)
+    
+    def deparseRemote(self): 
+        segment = self.getNextDGLSegment() 
+        return segment      
          
     def seperateHeaderFromData(self, listOfStrings, listRef):
                                
