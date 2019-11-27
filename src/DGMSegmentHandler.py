@@ -6,8 +6,10 @@ class DGMSegmentHandler():
 
     def __init__(self, source):
         self.SOURCE = source
-        if self.SOURCE == "local":            
-            self.file = open("testdaten1.txt")            
+        if self.SOURCE == "local":
+                        
+            #self.file = open("testdaten1.txt")
+            self.file = open("test2.txt")            
         if self.SOURCE == "remote":
             self.HOST = '127.0.0.1'  # The server's hostname or IP address
             self.PORT = 1337        # The port used by the server

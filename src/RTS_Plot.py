@@ -10,8 +10,9 @@ class RTS_Plot():
         plt.ion()
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111)
-        self.ax.set_xlim((0, 10))
-        self.ax.set_ylim((0, 10))      
+        self.ax.set_xlim((40, -10))
+        self.ax.set_ylim((-10, 40)) 
+        self.sc = self.ax.scatter(0,0)     
         
     def linePlot(self):        
         hl, = self.ax.plot([], [], "o")                
@@ -20,13 +21,18 @@ class RTS_Plot():
             time.sleep(0.5)
         time.sleep(2)
         
-    def scatterPlot(self):
+    def scatterPlotTest(self):
         x = [None]
         y = [None] 
         sc = self.ax.scatter(x,y)        
         for i in range(6):
             self.update_scatter(sc, [i, i])            
-            time.sleep(0.5)                     
+            time.sleep(0.5) 
+            
+    def scatterPlot(self, x, y):
+        #x = [None]
+        #y = [None]
+        self.update_scatter(self.sc, [x, y])                   
         
     def update_scatter(self, sc, new_data):
         sc.set_offsets(np.c_[new_data[0],new_data[1]])
