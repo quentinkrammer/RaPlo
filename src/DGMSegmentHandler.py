@@ -6,17 +6,16 @@ class DGMSegmentHandler():
 
     def __init__(self, source):
         self.SOURCE = source
-        if self.SOURCE == "local":
-                        
-            #self.file = open("testdaten1.txt")
-            self.file = open("test2.txt")            
+        if self.SOURCE == "local":                        
+            self.file = open("testdaten1.txt")
+            #self.file = open("test2.txt")            
         if self.SOURCE == "remote":
             self.HOST = '127.0.0.1'  # The server's hostname or IP address
             self.PORT = 1337        # The port used by the server
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect((self.HOST, self.PORT))
             self.file = None
-            self.buffer = 2**16 #2**19 to match 4e7
+            self.buffer = 2**15 #2**19 to match 4e7
         
     def __del__(self):
         if self.SOURCE == "local":

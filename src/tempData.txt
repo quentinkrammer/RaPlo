@@ -1,0 +1,17 @@
+<DGM>Transmitted 14:27:33:693
+ Joint Detection List: 
+Version,TimeStamp_mys,CycleNumber,NumDetections,_PowerDB,_CoGRange,_CoGDoppler,_WRange10DB,_WDoppler10DB,_StdRange_cm,_StdDoppler,_Azimuth,_StdAzimuth,_Infrastructure,_NoInfrastructure,_ValidXBeam,_ValidXBeamIndex,_ValidXMeasurementNumber,_ValidTrace,_LatPos_m,_LongPos_m,_AzimtuhCar_rad,_NSensor,_Is_Clustered,_Is_InlinerOrientation,
+52685,9360000,130,76,19,2.31,0,0,0,15,4,3.038618,134,True,False,False,0,1,True,1.007451,-2.785763,2.794584,0,False,True,
+
+ Host Dynamics: 
+GearPosition,CrossAcceleration_cms2,LongitudinalAcceleration_cms2,Speed_kmh,YawRate_degs,DrivingForward,HostRadiusOfCurvature_m,HostBraking,HostTrailerAttached,HostFrontWheelAngle_rad,HostWheelbase_mm,
+0,0,0,0,0,False,0,False,False,0,0,
+</DGM><DGM>Transmitted 14:27:33:693
+ Joint Detection List: 
+Version,TimeStamp_mys,CycleNumber,NumDetections,_PowerDB,_CoGRange,_CoGDoppler,_WRange10DB,_WDoppler10DB,_StdRange_cm,_StdDoppler,_Azimuth,_StdAzimuth,_Infrastructure,_NoInfrastructure,_ValidXBeam,_ValidXBeamIndex,_ValidXMeasurementNumber,_ValidTrace,_LatPos_m,_LongPos_m,_AzimtuhCar_rad,_NSensor,_Is_Clustered,_Is_InlinerOrientation,
+52685,9360000,130,76,19,2.31,0,0,0,15,4,3.038618,134,True,False,False,0,1,True,1.007451,-2.785763,2.794584,0,False,True,
+
+ Host Dynamics: 
+GearPosition,CrossAcceleration_cms2,LongitudinalAcceleration_cms2,Speed_kmh,YawRate_degs,DrivingForward,HostRadiusOfCurvature_m,HostBraking,HostTrailerAttached,HostFrontWheelAngle_rad,HostWheelbase_mm,
+0,0,0,0,0,False,0,False,False,0,0,
+</DGM>

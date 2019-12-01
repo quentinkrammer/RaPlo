@@ -10,8 +10,8 @@ class RTS_Plot():
         plt.ion()
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot(111)
-        self.ax.set_xlim((40, -10))
-        self.ax.set_ylim((-10, 40)) 
+        self.ax.set_xlim((-110, 90))
+        self.ax.set_ylim((-100, 80)) 
         self.sc = self.ax.scatter(0,0)     
         
     def linePlot(self):        
