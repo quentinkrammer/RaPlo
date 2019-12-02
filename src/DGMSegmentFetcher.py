@@ -14,12 +14,13 @@ class DGMSegmentFetcher(ConfigHandler):
             self.file = open(self.getValue("path"))                        
         if self.SOURCE == "remote":
             self.setSection("DGMSegmentFetcher_Remote")
-            self.HOST = self.getValue("host")  # The server's hostname or IP address
-            self.PORT = int(self.getValue("port"))        # The port used by the server
+            self.HOST = self.getValue("host")
+            self.PORT = int(self.getValue("port"))     
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect((self.HOST, self.PORT))
             self.file = None
-            self.buffer = self.getValue("buffer") #2**19 to match 4e7
+            self.buffer = int(self.getValue("buffer")) #2**19 to match 4e7
+            self.dataStorageFile = self.getValue("dataStoragePath") 
         
     def __del__(self):
         if self.SOURCE == "local":
@@ -27,19 +28,25 @@ class DGMSegmentFetcher(ConfigHandler):
         if self.SOURCE == "remote":            
             self.socket.close()
             
+    def writeToFile(self, txt):
+        f = open(self.dataStorageFile, "a")
+        f.write(txt)
+        f.close()
+            
     def getNextDGMSegment(self):
         if self.SOURCE == "local":
             return self.getNextDGM()
         if self.SOURCE == "remote":
             return self.getNextDGM_Remote()       
                         
-    def getNextDGM_Remote(self):         
-        data = self.socket.recv(self.buffer).decode()#data = self.socket.recv(int(4.0E7)
-   
-        tempFile = open("tempData.txt", 'w')
-        tempFile.write(data)
+    def getNextDGM_Remote(self):
+        dataBytes = self.socket.recv(self.buffer)
+        dataStr = dataBytes.decode()
+        self.writeToFile(dataStr)   
+        tempFile = open(".tempData.txt", 'w')
+        tempFile.write(dataStr)
         tempFile.close()                 
-        with open("tempData.txt") as self.file:
+        with open(".tempData.txt") as self.file:
             segment = self.getNextDGM()          
         return segment
     
@@ -70,12 +77,3 @@ class DGMSegmentFetcher(ConfigHandler):
         l = self.file.readline() 
         l = l.rstrip('\n').strip()
         return l
-    
-    def writeToFile(self, txt):
-        #f = open(".\data\testdatenX.txt", "a")
-        f = open("latest_recorded_data.txt", "a")
-        f.write(txt)
-        f.close()
-        
-# d = DGMSegmentFetcher()
-# print(d.SOURCE)

@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/ConfigHandler.py=utf-8
 encoding//src/DGMSegmentFetcher.py=utf-8
 encoding//src/DGMSegmentParser.py=utf-8
 encoding//src/DataSmoother.py=utf-8

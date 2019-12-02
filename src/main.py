@@ -3,6 +3,7 @@ import wx
 import threading
 from DGMSegmentParser import DGMSegmentParser
 from DataSmoother import DataSmoother
+from ConfigHandler import ConfigHandler
 
 def update():
     parser = DGMSegmentParser()
@@ -14,7 +15,7 @@ def update():
         YData = []#         CData2 = []#DataJDL.CoG_Doppler(SelectedSensor);      
         dopplerData = []       
         for index, sensor in enumerate(jdl["_NSensor"]):
-            if sensor == "2":
+            if sensor == sensor:
                 XData.append(float(jdl["_LatPos_m"][index]))
                 YData.append(float(jdl["_LongPos_m"][index]))
                 dopplerData.append(float(jdl["_CoGDoppler"][index]))         
@@ -27,6 +28,8 @@ def update():
         frame.updateDoppler(dopplerMedian)
     
 
+config = ConfigHandler("DEFAULT")
+sensor = config.getValue("sensor")
 doppler_Smoother = DataSmoother()
 X_Smoother = DataSmoother()
 Y_Smoother = DataSmoother()
