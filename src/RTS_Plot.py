@@ -1,44 +1,37 @@
-# -*- coding: utf-8 -*-
-
-import matplotlib.pyplot as plt
+import matplotlib
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
+import wx
 import numpy as np
 import time
+from ConfigHandler import ConfigHandler
 
-class RTS_Plot():
+class RTS_Plot(wx.Panel):
 
-    def __init__(self):
-        plt.ion()
-        self.fig = plt.figure()
-        self.ax = self.fig.add_subplot(111)
-        self.ax.set_xlim((-110, 90))
-        self.ax.set_ylim((-100, 80)) 
-        self.sc = self.ax.scatter(0,0)     
+    def __init__(self, parent):
+        wx.Panel.__init__(self, parent, -1)
+        self.config = ConfigHandler(type(self).__name__ )
+        self.figure = matplotlib.figure.Figure()
+        X_Min = int(self.config.getValue("X_Min"))
+        X_Max = int(self.config.getValue("X_Max"))
+        Y_Min = int(self.config.getValue("Y_Min"))
+        Y_Max = int(self.config.getValue("Y_Max"))
+        self.axes = self.figure.add_subplot(111)        
+        self.axes.set_xlim((X_Min, X_Max))
+        self.axes.set_ylim((Y_Min,Y_Max))          
+
+        self.sc = self.axes.scatter(0,0) 
+        self.canvas = FigureCanvas(self, -1, self.figure)
         
-    def linePlot(self):        
-        hl, = self.ax.plot([], [], "o")                
-        for i in range(6):
-            self.update_line(hl, [i, i])
-            time.sleep(0.5)
-        time.sleep(2)
+        self.sizer = wx.BoxSizer(wx.VERTICAL)
+        self.sizer.Add(self.canvas, 1, wx.EXPAND)
+        self.SetSizer(self.sizer)       
+        #self.update("text")  
+              
+    def updateScatter(self, XData, YData):            
+        self.sc.set_offsets(np.c_[XData,YData])
+        self.canvas.draw() 
         
-    def scatterPlotTest(self):
-        x = [None]
-        y = [None] 
-        sc = self.ax.scatter(x,y)        
-        for i in range(6):
-            self.update_scatter(sc, [i, i])            
-            time.sleep(0.5) 
-            
-    def scatterPlot(self, x, y):
-        #x = [None]
-        #y = [None]
-        self.update_scatter(self.sc, [x, y])                   
+
         
-    def update_scatter(self, sc, new_data):
-        sc.set_offsets(np.c_[new_data[0],new_data[1]])
-        self.fig.canvas.draw()  
         
-    def update_line(self, hl, new_data):
-        hl.set_xdata(new_data[0])
-        hl.set_ydata(new_data[1])
-        self.fig.canvas.draw()
