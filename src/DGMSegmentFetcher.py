@@ -2,6 +2,7 @@
 
 import socket
 from ConfigHandler import ConfigHandler
+import collections
 
 class DGMSegmentFetcher(ConfigHandler):
 
@@ -35,9 +36,9 @@ class DGMSegmentFetcher(ConfigHandler):
             
     def getNextDGMSegment(self):
         if self.SOURCE == "local":
-            return self.getNextDGM()
+            return self.getNextDGM_Local()
         if self.SOURCE == "remote":
-            return self.getNextDGM_Remote()       
+            return self.getNextDGM_Remote2()       
                         
     def getNextDGM_Remote(self):
         dataBytes = self.socket.recv(self.buffer)
@@ -47,10 +48,10 @@ class DGMSegmentFetcher(ConfigHandler):
         tempFile.write(dataStr)
         tempFile.close()                 
         with open(".tempData.txt") as self.file:
-            segment = self.getNextDGM()          
+            segment = self.getNextDGM_Local()          
         return segment
     
-    def getNextDGM(self):
+    def getNextDGM_Local(self):
         segment = { "Joint Detection" : [],  \
                    "Host Dynamics" : []
             }
@@ -77,3 +78,26 @@ class DGMSegmentFetcher(ConfigHandler):
         l = self.file.readline() 
         l = l.rstrip('\n').strip()
         return l
+    
+    def getNextDGM_Remote2(self):
+        deque = collections.deque([], 6)
+        data = ""
+        while True:
+            char = self.socket.recv(1).decode()            
+            data += char
+            deque.append(char)
+            terminator = str().join(deque)            
+            if terminator == "</DGM>":
+                break
+        self.writeToFile(data)   
+        tempFile = open(".tempData.txt", 'w')
+        tempFile.write(data)
+        tempFile.close()                 
+        with open(".tempData.txt") as self.file:
+            segment = self.getNextDGM_Local()          
+        return segment
+            
+        
+            
+        
+
