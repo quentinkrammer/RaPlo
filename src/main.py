@@ -15,10 +15,10 @@ def floatValues(*strValues):
 
 def update():
     parser = DGMSegmentParser()
+    #phi = -np.pi/4
+    phi = np.radians(-45)
+    rotMat = np.array([[np.cos(phi), -np.sin(phi)], [np.sin(phi), np.cos(phi)]])  
     while True:
-        phi = -np.pi/4
-        rotMat = np.array([[np.cos(phi), -np.sin(phi)], [np.sin(phi), np.cos(phi)]])        
-        
         jdl, hd = parser.deparseNextSegment()
         
         xData = floatValues(*jdl["_LatPos_m"])
