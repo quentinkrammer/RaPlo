@@ -21,10 +21,6 @@ class Frame(wx.Frame):
         
         self.SetSizerAndFit(self.sizer)
         
-    def updateScatter(self, XValue, YValue):
-        self.rtsPlot.updateScatter(XValue, YValue)
-        
-    def updateDoppler(self, data):
-        self.doppler.updateData(data)
+
         
         

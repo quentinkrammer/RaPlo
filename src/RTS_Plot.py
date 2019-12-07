@@ -22,10 +22,17 @@ class RTS_Plot(wx.Panel):
         self.axes = self.figure.add_subplot(111)        
         self.axes.set_xlim((X_Min, X_Max))
         self.axes.set_ylim((Y_Min,Y_Max))
-        self.axes.set_xlabel("_LatPos_m")   
-        self.axes.set_ylabel("_LongPos_m")
-        self.axes.grid(True)        
-
+#         self.axes.set_xlabel("_LatPos_m")   
+#         self.axes.set_ylabel("_LongPos_m")
+        self.axes.grid(True)
+        self.axes.spines['left'].set_position('zero')
+        self.axes.spines['bottom'].set_position('zero')
+        radius = [9, 10, 11]
+        self.circleSegments = []
+        for r in radius:            
+            self.circleSegments.append(matplotlib.patches.Arc((0, 0), r*2, r*2, theta1=30, theta2=150, zorder=0))           
+            self.axes.add_patch(self.circleSegments[-1])
+        
         self.sc = self.axes.scatter(None,None, zorder=2)        
         self.scPriorDataPoints = self.axes.scatter(None, None)        
         
@@ -39,6 +46,11 @@ class RTS_Plot(wx.Panel):
         self.canvas.draw()
         self.X_PriorDataPoints.append(XData)
         self.Y_PriorDataPoints.append(YData)
+        
+    def updateScatter2(self, offsets):        
+        self.sc.set_offsets(offsets)
+        self.canvas.draw()
+  
         
          
 
