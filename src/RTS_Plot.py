@@ -30,8 +30,26 @@ class RTS_Plot(wx.Panel):
         radius = [9, 10, 11]
         self.circleSegments = []
         for r in radius:            
-            self.circleSegments.append(matplotlib.patches.Arc((0, 0), r*2, r*2, theta1=30, theta2=150, zorder=0))           
+            self.circleSegments.append(matplotlib.patches.Arc((0, 0), r*2, r*2, theta1=30, theta2=150,\
+                                                              linewidth=1.5, zorder=0))           
             self.axes.add_patch(self.circleSegments[-1])
+        self.lines = []
+        maxDistance = radius[-1]
+        for i in range(30, 160, 10):
+            if i % 30 == 0: 
+                self.axes.plot([0, maxDistance * np.cos(np.radians(i))],\
+                                       [0,  maxDistance * np.sin(np.radians(i))], "k-", zorder=1)                
+            else:
+                line = self.axes.plot([0, maxDistance * np.cos(np.radians(i))],\
+                                       [0,  maxDistance * np.sin(np.radians(i))], "k--",\
+                                       color='#C0C0C0', zorder=1)
+                #line.SetColor('#008000')
+#         lineAtDeg_neg30, = self.axes.plot([0, maxDistance * np.cos(np.radians(60))],\
+#                                        [0,  maxDistance * np.sin(np.radians(60))], "k-", zorder=1)
+#         lineAtDeg_30, = self.axes.plot([0, maxDistance * np.cos(np.radians(120))],\
+#                                        [0,  maxDistance * np.sin(np.radians(120))], "k-", zorder=1)
+#         lineAtDeg_60, = self.axes.plot([0, maxDistance * np.cos(np.radians(150))],\
+#                                          [0,  maxDistance * np.sin(np.radians(150))], "k-", zorder=1)
         
         self.sc = self.axes.scatter(None,None, zorder=2)        
         self.scPriorDataPoints = self.axes.scatter(None, None)        
