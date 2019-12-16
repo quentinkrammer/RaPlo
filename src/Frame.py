@@ -10,11 +10,11 @@ class Frame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title)        
         self.rtsPlot = RTS_Plot(self)
-        self.doppler = RTS_Plot_1D(self, 0, 5, "_CoGDoppler")      
+        #self.doppler = RTS_Plot_1D(self, 0, 5, "_CoGDoppler")      
         
         self.sizer = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer.Add(self.rtsPlot, 1, wx.EXPAND)
-        self.sizer.Add(self.doppler, 0, wx.EXPAND)
+        #self.sizer.Add(self.doppler, 0, wx.EXPAND)
         
         self.statusbar = self.CreateStatusBar()
         self.statusbar.SetStatusText("info text")

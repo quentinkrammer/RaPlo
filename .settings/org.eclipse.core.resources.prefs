@@ -3,4 +3,6 @@ encoding//src/ConfigHandler.py=utf-8
 encoding//src/DGMSegmentFetcher.py=utf-8
 encoding//src/DGMSegmentParser.py=utf-8
 encoding//src/DataSmoother.py=utf-8
+encoding//src/RTS_Plot.py=utf-8
+encoding//src/RTS_Plot_1D.py=utf-8
 encoding//src/main.py=utf-8

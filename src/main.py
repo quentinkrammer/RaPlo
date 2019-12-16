@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from Frame import Frame
 import wx
 import threading
@@ -16,7 +18,7 @@ def floatValues(*strValues):
 def update():
     parser = DGMSegmentParser()
     #phi = -np.pi/4
-    phi = np.radians(-45)
+    phi = np.radians(-45)    
     rotMat = np.array([[np.cos(phi), -np.sin(phi)], [np.sin(phi), np.cos(phi)]])  
     while True:
         jdl, hd = parser.deparseNextSegment()

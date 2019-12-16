@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import matplotlib
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 import wx

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import matplotlib
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
 import wx
@@ -43,13 +44,6 @@ class RTS_Plot(wx.Panel):
                 line = self.axes.plot([0, maxDistance * np.cos(np.radians(i))],\
                                        [0,  maxDistance * np.sin(np.radians(i))], "k--",\
                                        color='#C0C0C0', zorder=1)
-                #line.SetColor('#008000')
-#         lineAtDeg_neg30, = self.axes.plot([0, maxDistance * np.cos(np.radians(60))],\
-#                                        [0,  maxDistance * np.sin(np.radians(60))], "k-", zorder=1)
-#         lineAtDeg_30, = self.axes.plot([0, maxDistance * np.cos(np.radians(120))],\
-#                                        [0,  maxDistance * np.sin(np.radians(120))], "k-", zorder=1)
-#         lineAtDeg_60, = self.axes.plot([0, maxDistance * np.cos(np.radians(150))],\
-#                                          [0,  maxDistance * np.sin(np.radians(150))], "k-", zorder=1)
         
         self.sc = self.axes.scatter(None,None, zorder=2)        
         self.scPriorDataPoints = self.axes.scatter(None, None)        
