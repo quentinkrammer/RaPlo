@@ -62,6 +62,7 @@ class RTS_Plot(wx.Panel):
     def updateScatter2(self, offsets):        
         self.sc.set_offsets(offsets)
         self.canvas.draw()
+        #print(offsets)
   
         
          
