@@ -2,6 +2,7 @@
 
 import socket
 from ConfigHandler import ConfigHandler
+from datetime import datetime
 import collections
 
 class DGMSegmentFetcher(ConfigHandler):
@@ -21,7 +22,16 @@ class DGMSegmentFetcher(ConfigHandler):
             self.socket.connect((self.HOST, self.PORT))
             self.file = None
             self.buffer = int(self.getValue("buffer")) #2**19 to match 4e7
-            self.dataStorageFile = self.getValue("dataStoragePath") 
+            filename = datetime.now()
+            filename = filename.replace(microsecond=0)
+            filename = str(filename)
+            filename = filename.replace(":", "-")
+            filename = filename.replace(" ", "_")
+            self.dataStorageFile = filename+" "+self.getValue("dataStoragePath")
+            f = open(self.dataStorageFile, "w")
+            f.close()
+            self.dataHost = '127.0.0.1'  
+            self.dataPort = 12121  
         
     def __del__(self):
         if self.SOURCE == "local":
@@ -38,19 +48,8 @@ class DGMSegmentFetcher(ConfigHandler):
         if self.SOURCE == "local":
             return self.getNextDGM_Local()
         if self.SOURCE == "remote":
-            return self.getNextDGM_Remote2()       
-                        
-    def getNextDGM_Remote(self):
-        dataBytes = self.socket.recv(self.buffer)
-        dataStr = dataBytes.decode()
-        self.writeToFile(dataStr)   
-        tempFile = open(".tempData.txt", 'w')
-        tempFile.write(dataStr)
-        tempFile.close()                 
-        with open(".tempData.txt") as self.file:
-            segment = self.getNextDGM_Local()          
-        return segment
-    
+            return self.getNextDGM_Remote()     
+#     
     def getNextDGM_Local(self):
         segment = { "Joint Detection" : [],  \
                    "Host Dynamics" : []
@@ -79,7 +78,7 @@ class DGMSegmentFetcher(ConfigHandler):
         l = l.rstrip('\n').strip()
         return l
     
-    def getNextDGM_Remote2(self):
+    def getNextDGM_Remote(self):
         deque = collections.deque([], 6)
         data = ""
         while True:
@@ -89,7 +88,12 @@ class DGMSegmentFetcher(ConfigHandler):
             terminator = str().join(deque)            
             if terminator == "</DGM>":
                 break
-        self.writeToFile(data)   
+        self.writeToFile(data)
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:            
+            s.connect((self.dataHost, self.dataPort))
+            s.sendall(data.encode())
+           
         tempFile = open(".tempData.txt", 'w')
         tempFile.write(data)
         tempFile.close()                 
