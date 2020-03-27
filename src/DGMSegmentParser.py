@@ -9,7 +9,7 @@ class DGMSegmentParser(DGMSegmentFetcher):
         self.JDL = {}        
         self.HD = {}         
         
-    def deparseNextSegment(self):        
+    def deparseNextSegmentRaw(self):        
         JDLStrings, HDStrings = self.getNextDGMSegment()
         if not JDLStrings:
             return (False, False)    
@@ -30,6 +30,19 @@ class DGMSegmentParser(DGMSegmentFetcher):
                 self.HD[string].append(data[i])                                  
         return (self.JDL, self.HD)
     
-    def deparseRemote(self): 
-        segment = self.getNextDGLSegment() 
-        return segment    
+    def deparseNextSegmentFiltered(self):
+        JDLStrings = self.getNextDGMSegmentFiltered()
+        if len(JDLStrings) == 1:
+            return False
+        headerStrings = JDLStrings[0].split(",")
+        for string in headerStrings:
+            self.JDL[string] = []
+        for dataString in JDLStrings[1:]:
+            data = dataString.split(",")            
+            for i, string in enumerate(headerStrings):
+                self.JDL[string].append(data[i])
+        return self.JDL
+        
+#     def deparseRemote(self): 
+#         segment = self.getNextDGLSegment() 
+#         return segment    

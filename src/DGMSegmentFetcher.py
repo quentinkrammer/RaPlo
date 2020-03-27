@@ -13,7 +13,10 @@ class DGMSegmentFetcher(ConfigHandler):
         self.SOURCE = self.getValue("source", "DEFAULT")        
         if self.SOURCE == "local" : 
             self.setSection("DGMSegmentFetcher_Local")                       
-            self.file = open(self.getValue("path"))                        
+            self.file = open(self.getValue("path"))
+            self.filFile = "C:\\Users\\Divalu\\git\\DataSort\\DataSort\\src\\filtered\\Comb\\38_55_Comb_2020-03-11_13-48-47.txt"
+            self.fileFiltered = open(self.filFile, "r")
+            self.headerFiltered = False                       
         if self.SOURCE == "remote":
             self.setSection("DGMSegmentFetcher_Remote")
             self.HOST = self.getValue("host")
@@ -78,6 +81,18 @@ class DGMSegmentFetcher(ConfigHandler):
         l = l.rstrip('\n').strip()
         return l
     
+    def getNextDGMSegmentFiltered(self):
+        JDLSegment = []
+        if not self.headerFiltered:
+            self.headerFiltered = self.fileFiltered.readline().rstrip('\n')
+        JDLSegment.append(self.headerFiltered)       
+        while True:
+            data = self.fileFiltered.readline().rstrip('\n').strip()
+            if not data:
+                break
+            JDLSegment.append(data)
+        return JDLSegment
+    
     def getNextDGM_Remote(self):
         deque = collections.deque([], 6)
         data = ""
@@ -100,6 +115,8 @@ class DGMSegmentFetcher(ConfigHandler):
         with open(".tempData.txt") as self.file:
             segment = self.getNextDGM_Local()          
         return segment
+    
+    
             
         
             

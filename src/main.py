@@ -27,20 +27,23 @@ def intValues(*strValues):
     return intValues
 
 def update():
-    
+     
     phi = np.radians(-(45+100))    
     rotMat = np.array([[np.cos(phi), -np.sin(phi)], [np.sin(phi), np.cos(phi)]])
+     
 #     measurementStarted = False
 #     fileIndex = 0    
     while True:
-        jdl, hd = parser.deparseNextSegment()
+        #jdl, hd = parser.deparseNextSegmentRaw()
+        jdl = parser.deparseNextSegmentFiltered()
         
         xData = floatValues(*jdl["_LatPos_m"])
         yData = floatValues(*jdl["_LongPos_m"])
         
+        
         dataPoints = np.array([xData, yData])        
         rotDataPoints = rotMat.dot(dataPoints)        
-        scatterCoordinates = np.transpose(rotDataPoints)     
+        scatterCoordinates = np.transpose(dataPoints)     
         frame.rtsPlot.updateScatter2(scatterCoordinates)        
         
 #         for sc in scatterCoordinates:            
